@@ -1,48 +1,55 @@
 #include <iostream>
 #include <string>
- 
+#include <ctime>
+#include <cstdlib>
+
 using namespace std; 
 
-int gameStartOption (int);
+void memoryGame ();
+void numberGame ();
 
 int main () {
-	int home1;
-	int home2;
-	int home3;
 	int homeAccess;
 	
-	cout << "Memory Game";
-	
-	cout << endl << endl << endl;
+	cout << "============================" << endl;
+	cout << "\t Memory Game" << endl;
+	cout << "============================" << endl  << endl << endl << endl;
 	
 	cout << "1. Matching Game" << endl;
-	
 	cout << "2. Number Game" << endl << endl << endl;
-	
-	cout << "\t Enter the number to access: ";
+	cout << "Select the Game you want to play: ";
 	cin >> homeAccess;
 	
 	while (homeAccess > 2) {
-		cout << "\t Enter the number to access: ";
+		cout << "Select the Game you want to play: ";
 		cin >> homeAccess;
 	}
 	
 	if (system("CLS")) system("clear");
 	
 	if (homeAccess = 1) {
-		gameStartOption;
-		memoryGame;
+		memoryGame();
 	}
 	
-	else (homeAccess = 2) {
-		gameStartOption;
-		numberGame;
+	else if (homeAccess = 2) {
+		numberGame();
 	}
 
 	return 0;
 }
 
-int gameStartOption (int lv) {
+void memoryGame() {
+	unsigned number = time(0);
+	srand (number);
+	int row1;
+	int column1;
+	int row2;
+	int column2;
+	int lv;
+	int area;
+	int square[area][area];
+	char comma;
+	
 	cout << "Choose the lv of difficulty you want to play (1-10): ";
 	cin >> lv;
 	
@@ -50,16 +57,83 @@ int gameStartOption (int lv) {
 		cout << "Choose the lv of difficulty you want to play (1-10): ";
 		cin >> lv;
 	}
-	return lv;
-}
-
-int memoryGame () {
-	// square
+	
+	area = lv + 3;
+	
+	// random number
 	for (int length = 0; length < area; length++) {
         for (int width = 0; width < area; width++) {
-            cout<<"*";
+            square[length][width] = (rand()%(9-1+1))+1;
+            cout << square[length][width];
         }
         cout<<endl;
     }
-    cout<<endl;
+	
+	// square
+	for (int length = 0; length < area; length++) {
+        for (int width = 0; width < area; width++) {
+            cout << "*";
+        }
+        cout << endl;
+    }
+    
+	cout<<endl;
+    
+    //selection
+    cout << "Please insert the first card row and column seperated by a comma." << endl;
+    cin >> row1 >> comma >> column1;
+    cout << "Please insert the second card row and column seperated by a comma." << endl;
+    cin >> row2 >> comma >> column2;
+    
+    //fix
+    row1--;
+    column1--;
+    row2--;
+    column2--;
+    
+    for (int length = 0; length < area; length++) {
+        for (int width = 0; width < area; width++) {
+            if ((length == row1) && (width == column1)) {
+                cout << square[area][area] << " ";
+            }
+            
+            else if((length == row2) && (width == column2)) {
+                cout << square[area][area] << " ";
+            }
+            
+            else {
+                cout << "* ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+void numberGame() {
+	unsigned number = time(0);
+	srand (number);
+	int row;
+	int column;
+	int lv;
+	int area;
+	int square[area][area];
+	char comma;
+	
+	cout << "Choose the lv of difficulty you want to play (1-10): ";
+	cin >> lv;
+	
+	while (lv> 10) {
+		cout << "Choose the lv of difficulty you want to play (1-10): ";
+		cin >> lv;
+	}
+	
+	area = lv + 3;
+	
+    //selection
+    cout << "Please insert the card row and column seperated by a comma." << endl;
+    cin >> row >> comma >> column;
+    
+    //fix
+    row--;
+    column--;
 }

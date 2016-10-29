@@ -2,6 +2,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <unistd.h>
 
 using namespace std; 
 
@@ -13,7 +14,7 @@ int main () {
 	
 	cout << "============================" << endl;
 	cout << "\t Memory Game" << endl;
-	cout << "============================" << endl  << endl << endl << endl;
+	cout << "============================" << endl  << endl << endl;
 	
 	cout << "1. Matching Game" << endl;
 	cout << "2. Number Game" << endl << endl << endl;
@@ -41,99 +42,104 @@ int main () {
 void memoryGame() {
 	unsigned number = time(0);
 	srand (number);
-	int row1;
-	int column1;
-	int row2;
-	int column2;
-	int lv;
-	int area;
-	int square[area][area];
+	int number1;
+	int number2;
+	int square[5][5];
+	int randomNumber[25];
+	int counter=0;
+	int random;
+	int miss=0;
 	char comma;
 	
-	cout << "Choose the lv of difficulty you want to play (1-10): ";
-	cin >> lv;
-	
-	while (lv> 10) {
-		cout << "Choose the lv of difficulty you want to play (1-10): ";
-		cin >> lv;
+	// random number
+	for (int i = 0; i < 25; i++) {
+		randomNumber[i]= {rand()%(9-1+1)+1};
+		if(counter%5==0 && counter!=0)
+		cout<<endl;
+		cout << randomNumber[i]<<" "; 
+		counter++;
 	}
 	
-	area = lv + 3;
+	sleep (10);
 	
-	// random number
-	for (int length = 0; length < area; length++) {
-        for (int width = 0; width < area; width++) {
-            square[length][width] = (rand()%(9-1+1))+1;
-            cout << square[length][width];
-        }
-        cout<<endl;
-    }
+	if (system("CLS")) system("clear");
 	
 	// square
-	for (int length = 0; length < area; length++) {
-        for (int width = 0; width < area; width++) {
-            cout << "*";
+	for (int length = 0; length < 5; length++) {
+        for (int width = 0; width < 5; width++) {
+            cout << "* ";
         }
         cout << endl;
     }
     
 	cout<<endl;
     
-    //selection
-    cout << "Please insert the first card row and column seperated by a comma." << endl;
-    cin >> row1 >> comma >> column1;
-    cout << "Please insert the second card row and column seperated by a comma." << endl;
-    cin >> row2 >> comma >> column2;
+    cout << "The place of the card start from upper left and moving to the right" << endl;
+    cout << "Ex: 1 2 3 4 5" << endl;
+	cout << "    * * * * *" << endl << endl;
+    	
+    //selection	
+	cout << "Please insert the place of the first card." << endl;
+    cin >> number1;
+    
+	cout << "Please insert the place of second card." << endl;
+    cin >> number2;
     
     //fix
-    row1--;
-    column1--;
-    row2--;
-    column2--;
+    number1--;
+    number2--;
     
-    for (int length = 0; length < area; length++) {
-        for (int width = 0; width < area; width++) {
-            if ((length == row1) && (width == column1)) {
-                cout << square[area][area] << " ";
-            }
-            
-            else if((length == row2) && (width == column2)) {
-                cout << square[area][area] << " ";
-            }
-            
-            else {
-                cout << "* ";
-            }
-        }
-        cout << endl;
-    }
+    //reveal
+	for (int i = 0; i < 25; i++) {
+		if (counter % 5 == 0 && counter != 0)
+			cout<<endl;
+		
+		if (i == number1 || i == number2) {
+			cout << randomNumber[i] << " ";
+			}
+		
+		else cout << "* ";
+		counter++;
+		
+		if (randomNumber[i] != randomNumber[i]) {
+			miss = miss + 1;
+		}
+	}	
+	
+	cout << endl << endl;
+	cout << "Miss: " << miss << endl << endl;
 }
 
 void numberGame() {
 	unsigned number = time(0);
 	srand (number);
-	int row;
-	int column;
-	int lv;
-	int area;
-	int square[area][area];
+	int number1;
+	int number2;
+	int square[5][5];
+	int randomNumber[25];
+	int counter=0;
 	char comma;
 	
-	cout << "Choose the lv of difficulty you want to play (1-10): ";
-	cin >> lv;
-	
-	while (lv> 10) {
-		cout << "Choose the lv of difficulty you want to play (1-10): ";
-		cin >> lv;
+		// random number
+	for (int i = 0; i < 25; i++) {
+		randomNumber[i]= {rand()%(9-1+1)+1};
+		if(counter%5==0 && counter!=0)
+		cout<<endl;
+		cout << randomNumber[i]<<" "; 
+		counter++;
 	}
 	
-	area = lv + 3;
+	sleep (10);
 	
-    //selection
-    cout << "Please insert the card row and column seperated by a comma." << endl;
-    cin >> row >> comma >> column;
+	if (system("CLS")) system("clear");
+	
+	// square
+	for (int length = 0; length < 5; length++) {
+        for (int width = 0; width < 5; width++) {
+            cout << "* ";
+        }
+        cout << endl;
+    }
     
-    //fix
-    row--;
-    column--;
+	cout<<endl;
 }
